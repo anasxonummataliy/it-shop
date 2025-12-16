@@ -29,11 +29,14 @@ class Category(Base):
 
 class Item(Base):
     __tablename__ = "items"
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    category: Mapped[int] = mapped_column(ForeignKey("categories.id"))
-    name: Mapped[str] = mapped_column(String)
-    description: Mapped[str] = mapped_column(String)
-    price: Mapped[int]
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    category_id: Mapped[int] = mapped_column(
+        ForeignKey("categories.id"), nullable=False
+    )
+    name: Mapped[str] = mapped_column(String(255), nullable=False)
+    description: Mapped[str] = mapped_column(String(255))
+    price: Mapped[int] = mapped_column(Integer, nullable=False)
 
 
 async def async_main():

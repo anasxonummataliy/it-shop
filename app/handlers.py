@@ -3,7 +3,7 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters import CommandStart, Command
 
 import app.keyboards as kb
-from app.database.requests import set_user, get_items
+from app.database.requests import set_user, get_item_by_id
 
 
 router = Router()
@@ -36,15 +36,15 @@ async def category(callback: CallbackQuery):
     await callback.answer("")
     await callback.message.edit_text(
         "kategoriya bo'yicha mahsulotni tanlang",
-        reply_markup=await kb.get_items(callback.data.split("_")[1]),
+        reply_markup=await kb.items_keyboard(int(callback.data.split("_")[1])),
     )
 
 
 @router.callback_query(F.startswith("item_"))
 async def item_handler(callback: CallbackQuery):
-    item = await get_items(callback.data.split("_")[1])
+    item = await get_item_by_id(int(callback.data.split("_")[1]))
     await callback.answer("")
     await callback.message.answer(
         f"{item.name}\n\n {item.description} \n\n Narx: {item.price}",
-        reply_markup=await kb.back_to_category(item.category),
+        reply_markup=await kb.back_to_category(item.category_id),
     )

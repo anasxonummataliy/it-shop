@@ -13,14 +13,18 @@ async def set_user(tg_id):
 
 async def get_catagory():
     async with async_session() as session:
-        return await session.scalars(select(Category))
+        result = await session.scalars(select(Category))
+        return result.all()
 
 
-async def get_items_by_category(category_id):
+async def get_items_by_category(category_id: int):
     async with async_session() as session:
-        return await session.scalars(select(Item).where(Item.category == category_id))
+        result = await session.scalars(
+            select(Item).where(Item.category_id == category_id)
+        )
+        return result.all()
 
 
-async def get_items(item_id):
+async def get_item_by_id(item_id: int):
     async with async_session() as session:
-        return await session.scalars(select(Item).where(Item.id == item_id))
+        return await session.scalar(select(Item).where(Item.id == item_id))
