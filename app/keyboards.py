@@ -12,7 +12,7 @@ menu = InlineKeyboardMarkup(
 
 
 async def categories():
-    all_categories = get_catagory()
+    all_categories = await get_catagory()
     ikb = InlineKeyboardBuilder()
     for category in all_categories:
         ikb.row(
@@ -20,7 +20,7 @@ async def categories():
                 text=category.name, callback_data=f"category_{category.id}"
             )
         )
-    ikb.row(InlineKeyboardButton(text="Tasdiqlash", callback_data="start"))
+    ikb.row(InlineKeyboardButton(text="Back", callback_data="start"))
     return ikb.as_markup()
 
 

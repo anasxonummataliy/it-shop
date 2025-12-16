@@ -11,7 +11,7 @@ router = Router()
 
 @router.message(CommandStart())
 async def start_handler(message: Message):
-    await set_user(message.from_user.id)
+    await set_user(int(message.from_user.id))
     await message.answer(
         "Assalomu alaykum, bizning botimizga xush kelibsiz,", reply_markup=kb.menu
     )
@@ -27,7 +27,7 @@ async def callback_start(callback: CallbackQuery):
 async def catalog(callback: CallbackQuery):
     await callback.answer("")
     await callback.message.edit_text(
-        text="Tovarlar toifalarini tanlang", reply_markup=await kb.categories()
+        text="Katolog", reply_markup=await kb.categories()
     )
 
 

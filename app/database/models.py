@@ -1,6 +1,6 @@
 import os
 
-from sqlalchemy import String, ForeignKey, BigInteger
+from sqlalchemy import String, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
 from sqlalchemy.ext.asyncio import AsyncAttrs, async_sessionmaker, create_async_engine
 
@@ -14,20 +14,23 @@ async_session = async_sessionmaker(engine)
 class Base(AsyncAttrs, DeclarativeBase):
     pass
 
+
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    tg_id: Mapped[int] = mapped_column(BigInteger)
+    tg_id: Mapped[int] = mapped_column(Integer, nullable=False, unique=True)
+
 
 class Category(Base):
-    __tablename__ = 'categories'
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    __tablename__ = "categories"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String(255))
 
+
 class Item(Base):
-    __tablename__ = 'items'
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    category: Mapped[int] = mapped_column(ForeignKey('categories.id'))
+    __tablename__ = "items"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    category: Mapped[int] = mapped_column(ForeignKey("categories.id"))
     name: Mapped[str] = mapped_column(String)
     description: Mapped[str] = mapped_column(String)
     price: Mapped[int]
