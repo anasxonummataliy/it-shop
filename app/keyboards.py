@@ -24,7 +24,7 @@ async def categories():
     return ikb.as_markup()
 
 
-async def items_keyboard(category_id):
+async def items_keyboard(category_id: int):
     all_items = await get_items_by_category(category_id)
     ikb = InlineKeyboardBuilder()
     for items in all_items:

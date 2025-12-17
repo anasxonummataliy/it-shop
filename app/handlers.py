@@ -36,7 +36,7 @@ async def category(callback: CallbackQuery):
     await callback.answer("")
     await callback.message.edit_text(
         "kategoriya bo'yicha mahsulotni tanlang",
-        reply_markup=await kb.items_keyboard(int(callback.data.split("_")[1])),
+        reply_markup=await kb.items_keyboard((callback.data.split("_")[1])),
     )
 
 
